@@ -1,5 +1,8 @@
 #! /bin/bash
 
+##Set to ask on file override
+set -o noclobber
+
 WriteToConsole () {
 	echo
 	echo "------------------------"
@@ -51,21 +54,24 @@ WriteToConsole () {
 	wget -qO - https://deb.volian.org/volian/scar.key | sudo tee /etc/apt/trusted.gpg.d/volian-archive-scar-unstable.gpg
 	##Install Nala
 	sudo apt update && sudo apt install nala
+
 	##Gets best image site
 	sudo nala fetch
-	##Points apt to nala
-	##Add this to  ~/.bashrc AND /root/.bashrc files to substitute apt for Nala:
-	##apt() { 
-	##  command nala "$@"
-	##}
-	##sudo() {
-	##  if [ "$1" = "apt" ]; then
-	##    shift
-	##    command sudo nala "$@"
-	##  else
-	##    command sudo "$@"
-	##  fi
-	##}
+
+	##Substitutes apt to nala
+	echo -n 
+	"apt() { 
+	  command nala "$@"
+	}
+	sudo() {
+	  if [ "$1" = "apt" ]; then
+	    shift
+	    command sudo nala "$@"
+	  else
+	    command sudo "$@"
+	  fi
+	}" >> ~/.bashrc
+
 	WriteToConsole "Nala successfully installed"
 
 ##Install Sublime Text
@@ -86,9 +92,25 @@ WriteToConsole () {
 	##Install Docker
 	sudo apt update && sudo apt install docker-ce docker-ce-cli containerd.io
 	##Do we want docker to start at sytem load?
-	#sudo systemctl enable docker.service && sudo systemctl enable containerd.service
+	echo "Do you want docker to load at system startup [y|n]?"
+	read isDockerLoad
+	if [isDockerLoad == "y"]; then
+		sudo systemctl enable docker.service && sudo systemctl enable containerd.service
+	fi
 	##Do we want a container setting up now?
-	#sudo docker run -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=blog_user -e POSTGRES_DB=blog_db library/postgres
+	echo "Do you want to create a postgres docker container now [y|n]?"
+	read isDockerContainer
+	if [isDockerContainer == "y"]; then
+		echo "What's your postgres user name?"
+		read pgUser
+		echo "What's your postgres password?"
+		read pgPass
+		echo "What do you want your container to be called?"
+		read containerName
+		echo "What do you want your database to be called?"
+		read dbName
+		sudo docker run -e --name $containerName POSTGRES_USER=$pgUser -e POSTGRES_PASSWORD=$pgPass -e POSTGRES_DB=$dbName library/postgres
+	fi
 	WriteToConsole "Docker successfully installed"
 
 ##Install Jetbrains stuff

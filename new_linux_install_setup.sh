@@ -59,6 +59,8 @@ WriteToConsole () {
 	sudo nala fetch
 
 	##Substitutes apt to nala
+	##Backing up .bashrc first
+	sudo cp ~/.bashrc ~/.bashrc_backup
 	echo -n 
 	"apt() { 
 	  command nala "$@"
@@ -109,17 +111,25 @@ WriteToConsole () {
 		read containerName
 		echo "What do you want your database to be called?"
 		read dbName
-		sudo docker run -e --name $containerName POSTGRES_USER=$pgUser -e POSTGRES_PASSWORD=$pgPass -e POSTGRES_DB=$dbName library/postgres
+		sudo docker run --name $containerName -e POSTGRES_USER=$pgUser -e POSTGRES_PASSWORD=$pgPass -e POSTGRES_DB=$dbName library/postgres
 	fi
 	WriteToConsole "Docker successfully installed"
 
 ##Install Jetbrains stuff
+	dataGrip = "DataGrip.tar.gz"
+	rider = "Rider.tar.gz"
+	download = "Dwnloads"
+
 	##Install DataGrip
-	##wget https://www.jetbrains.com/datagrip/download/
-	##cd into directory
-	##sudo tar xzf datagrip-*.tar.gz -C /opt/
+	WriteToConsole "Installing DataGrip..."
+	wget -O $dataGrip -P $download https://www.jetbrains.com/datagrip/download/
+	cd ~/$download
+	sudo tar xzf $dataGrip -C /opt/
+	WriteToConsole "DataGrip successfully installed"
 
 	##Install Rider
-	##wget https://www.jetbrains.com/rider/download/
-	##cd into directory
-	##sudo tar xzf datagrip-*.tar.gz -C /opt/
+	WriteToConsole "Installing Rider..."
+	wget -O $rider -P $download https://www.jetbrains.com/rider/download/
+	cd ~/$download
+	sudo tar xzf $rider -C /opt/
+	WriteToConsole "Rider successfully installed"

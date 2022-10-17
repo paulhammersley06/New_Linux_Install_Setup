@@ -18,7 +18,7 @@ WriteToConsole () {
 	sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 	echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
 	##Install brave
-	sudo apt update && apt install brave-browser
+	sudo apt update && apt install -y brave-browser
 	WriteToConsole "Brave Browser successfully installed"
 
 ##Install .Net 6
@@ -34,7 +34,7 @@ WriteToConsole () {
 ##Install Git
 	WriteToConsole "Installing Git..."
 	sudo apt install git
-	WriteToConsole "Git installe successfully"
+	WriteToConsole "Git installed successfully"
 
 ##Install GitHub cli
 	WriteToConsole "Installing GitHub Cli..."
@@ -56,24 +56,20 @@ WriteToConsole () {
 	sudo apt update && sudo apt install nala
 
 	##Gets best image site
-	sudo nala fetch
-
+	echo "Do you want Nala to find the best image sites [y|n]?"
+	read isFindImage
+	if [[ $isFindImage == y ]]; then
+		sudo nala fetch	
+	fi
+	
 	##Substitutes apt to nala
-	##Backing up .bashrc first
-	sudo cp ~/.bashrc ~/.bashrc_backup
-	echo -n 
-	"apt() { 
-	  command nala "$@"
-	}
-	sudo() {
-	  if [ "$1" = "apt" ]; then
-	    shift
-	    command sudo nala "$@"
-	  else
-	    command sudo "$@"
-	  fi
-	}" >> ~/.bashrc
-
+	echo "Do you want Nala to replace apt [y|n]?"
+	read isReplaceApt
+	if [[ $isReplaceApt == y ]]; then
+		##Backing up .bashrc first
+		sudo cp /home/paul/.bashrc /home/paul/.bashrc_backup
+		sudo cat nala_config.txt >> /home/paul/.bashrc
+	fi
 	WriteToConsole "Nala successfully installed"
 
 ##Install Sublime Text
@@ -96,13 +92,14 @@ WriteToConsole () {
 	##Do we want docker to start at sytem load?
 	echo "Do you want docker to load at system startup [y|n]?"
 	read isDockerLoad
-	if [isDockerLoad == "y"]; then
-		sudo systemctl enable docker.service && sudo systemctl enable containerd.service
+	if [[ $isDockerLoad == y ]]; then
+		sudo systemctl enable docker.service && sudo systemctl enable containerd.service	
 	fi
 	##Do we want a container setting up now?
 	echo "Do you want to create a postgres docker container now [y|n]?"
 	read isDockerContainer
-	if [isDockerContainer == "y"]; then
+	echo $isDockerContainer
+	if [[ $isDockerContainer == y ]]; then
 		echo "What's your postgres user name?"
 		read pgUser
 		echo "What's your postgres password?"
@@ -116,20 +113,16 @@ WriteToConsole () {
 	WriteToConsole "Docker successfully installed"
 
 ##Install Jetbrains stuff
-	dataGrip = "DataGrip.tar.gz"
-	rider = "Rider.tar.gz"
-	download = "Dwnloads"
-
 	##Install DataGrip
 	WriteToConsole "Installing DataGrip..."
-	wget -O $dataGrip -P $download https://www.jetbrains.com/datagrip/download/
-	cd ~/$download
-	sudo tar xzf $dataGrip -C /opt/
+	cd /home/paul/Downloads
+	wget -O DataGrip.tar.gz https://www.jetbrains.com/datagrip/download/
+	sudo tar -xf DataGrip.tar.gz -C /opt/
 	WriteToConsole "DataGrip successfully installed"
 
 	##Install Rider
 	WriteToConsole "Installing Rider..."
-	wget -O $rider -P $download https://www.jetbrains.com/rider/download/
-	cd ~/$download
-	sudo tar xzf $rider -C /opt/
+	cd /home/paul/Downloads
+	wget -O Rider.tar.gz https://www.jetbrains.com/rider/download/	
+	sudo tar -xf Rider.tar.gz -C /opt/
 	WriteToConsole "Rider successfully installed"

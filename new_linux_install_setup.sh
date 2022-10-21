@@ -116,13 +116,13 @@ WriteToConsole () {
 	##Install DataGrip
 	WriteToConsole "Installing DataGrip..."
 	cd /home/paul/Downloads
-	wget -O DataGrip.tar.gz https://www.jetbrains.com/datagrip/download/
+	wget -O DataGrip.tar.gz https://download.jetbrains.com/datagrip/datagrip-2022.2.5.tar.gz
 	sudo tar -xf DataGrip.tar.gz -C /opt/
 	WriteToConsole "DataGrip successfully installed"
 
 	##Install Rider
 	WriteToConsole "Installing Rider..."
 	cd /home/paul/Downloads
-	wget -O Rider.tar.gz https://www.jetbrains.com/rider/download/	
+	wget -O Rider.tar.gz https://download.jetbrains.com/rider/JetBrains.Rider-2022.2.3.tar.gz
 	sudo tar -xf Rider.tar.gz -C /opt/
 	WriteToConsole "Rider successfully installed"

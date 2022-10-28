@@ -3,6 +3,10 @@
 ##Set to ask on file override
 set -o noclobber
 
+##UserName
+echo "Whats you user name?"
+read userName
+
 WriteToConsole () {
 	echo
 	echo "------------------------"
@@ -80,15 +84,15 @@ sudo apt install apt-transport-https ca-certificates curl gnupg2 software-proper
 	read isReplaceApt
 	if [[ $isReplaceApt == y ]]; then
 		##Backing up .bashrc first
-		cp /home/paul/.bashrc /home/$(whoami)/.bashrc_backup
-		cat nala_config.txt >> /home/$(whoami)/.bashrc
+		cp /home/$userName/.bashrc /home/$userName/.bashrc_backup
+		cat nala_config.txt >> /home/$userName/.bashrc
 	fi
 	WriteToConsole "Nala successfully installed"
 
 ##Install Sublime Text
 	WriteToConsole "Installing Sublime Text..."
 	##Install Sublime Text
-	udo apt install sublime-text
+	sudo apt install sublime-text
 	WriteToConsole "Sublime Text successfully installed"
 
 ##Install docker
@@ -121,14 +125,14 @@ sudo apt install apt-transport-https ca-certificates curl gnupg2 software-proper
 ##Install Jetbrains stuff
 	##Install DataGrip
 	WriteToConsole "Installing DataGrip..."
-	cd /home/$(whoami)/Downloads
+	cd /home/$userName/Downloads
 	wget -O DataGrip.tar.gz https://download.jetbrains.com/datagrip/datagrip-2022.2.5.tar.gz
 	sudo tar -xf DataGrip.tar.gz -C /opt/
 	WriteToConsole "DataGrip successfully installed"
 
 	##Install Rider
 	WriteToConsole "Installing Rider..."
-	cd /home/$(whoami)/Downloads
+	cd /home/$userName/Downloads
 	wget -O Rider.tar.gz https://download.jetbrains.com/rider/JetBrains.Rider-2022.2.3.tar.gz
 	sudo tar -xf Rider.tar.gz -C /opt/
 	WriteToConsole "Rider successfully installed"

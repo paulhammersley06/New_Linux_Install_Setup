@@ -8,14 +8,19 @@ echo "Whats you user name?"
 read userName
 
 WriteToConsole () {
-	echo
 	echo "------------------------"
 	echo "$1"
 	echo "------------------------"
 	echo
 }
 
+
+##Install Gnome (no bloat)
+WriteToConsole "Installing Gnome (no bloat)..."
+apt install gnome-session gnome-shell gnome-backgrounds gnome-applets gnome-control-center gnome-terminal --no-install-recommends
+
 ##Install Dependencies
+WriteToConsole "Installing dependencies..."
 sudo apt install apt-transport-https ca-certificates curl gnupg2 software-properties-common
 
 ##Add the repos
@@ -48,24 +53,20 @@ sudo apt install apt-transport-https ca-certificates curl gnupg2 software-proper
 	WriteToConsole "Installing Brave Browser..."
 	##Install brave
 	sudo apt install -y brave-browser
-	WriteToConsole "Brave Browser successfully installed"
 
 ##Install .Net 6
 	WriteToConsole "Installing .Net 6 SDK..."
 	##Install .net sdk
 	sudo apt-get install -y dotnet-sdk-6.0
-	WriteToConsole ".Net 6 SDK successfully installed"
 
 ##Install Git
 	WriteToConsole "Installing Git..."
 	sudo apt install git
-	WriteToConsole "Git installed successfully"
 
 ##Install GitHub cli
 	WriteToConsole "Installing GitHub Cli..."	
 	##Install github cli
 	sudo apt install -y gh
-	WriteToConsole "GitHub Cli successfully installed"
 
 ##Install Nala
 	WriteToConsole "Installing Nala..."	
@@ -87,13 +88,11 @@ sudo apt install apt-transport-https ca-certificates curl gnupg2 software-proper
 		cp /home/$userName/.bashrc /home/$userName/.bashrc_backup
 		cat nala_config.txt >> /home/$userName/.bashrc
 	fi
-	WriteToConsole "Nala successfully installed"
 
 ##Install Sublime Text
 	WriteToConsole "Installing Sublime Text..."
 	##Install Sublime Text
 	sudo apt install sublime-text
-	WriteToConsole "Sublime Text successfully installed"
 
 ##Install docker
 	WriteToConsole "Installing Docker..."
@@ -120,7 +119,6 @@ sudo apt install apt-transport-https ca-certificates curl gnupg2 software-proper
 		read dbName
 		sudo docker run --name $containerName -e POSTGRES_USER=$pgUser -e POSTGRES_PASSWORD=$pgPass -e POSTGRES_DB=$dbName library/postgres
 	fi
-	WriteToConsole "Docker successfully installed"
 
 ##Install Jetbrains stuff
 	##Install DataGrip
@@ -128,11 +126,9 @@ sudo apt install apt-transport-https ca-certificates curl gnupg2 software-proper
 	cd /home/$userName/Downloads
 	wget -O DataGrip.tar.gz https://download.jetbrains.com/datagrip/datagrip-2022.2.5.tar.gz
 	sudo tar -xf DataGrip.tar.gz -C /opt/
-	WriteToConsole "DataGrip successfully installed"
 
 	##Install Rider
 	WriteToConsole "Installing Rider..."
 	cd /home/$userName/Downloads
 	wget -O Rider.tar.gz https://download.jetbrains.com/rider/JetBrains.Rider-2022.2.3.tar.gz
 	sudo tar -xf Rider.tar.gz -C /opt/
-	WriteToConsole "Rider successfully installed"

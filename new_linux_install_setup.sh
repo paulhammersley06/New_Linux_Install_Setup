@@ -11,24 +11,46 @@ WriteToConsole () {
 	echo
 }
 
-##Install Brave Browser
-	WriteToConsole "Installing Brave Browser..."
-	##Get the stuff and add the repo
-	sudo apt install apt-transport-https curl
+##Install Curl
+sudo apt install apt-transport-https curl
+
+##Add the repos
+	WriteToConsole "Getting the repo's..."
+	##Brave Browser
 	sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 	echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+	##.Net 6
+	wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+	sudo dpkg -i packages-microsoft-prod.deb
+	rm packages-microsoft-prod.deb
+	##GitHub
+	curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+	sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
+	echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+	##Nala
+	echo "deb http://deb.volian.org/volian/ scar main" | sudo tee /etc/apt/sources.list.d/volian-archive-scar-unstable.list; 
+	wget -qO - https://deb.volian.org/volian/scar.key | sudo tee /etc/apt/trusted.gpg.d/volian-archive-scar-unstable.gpg
+	##Sublime
+	wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg
+	echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
+	##Docker
+	sudo apt install apt-transport-https ca-certificates curl gnupg2 software-properties-common
+	curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+	echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian buster stable" | sudo tee /etc/apt/sources.list.d/docker.list
+
+	sudo apt-get update
+
+
+##Install Brave Browser
+	WriteToConsole "Installing Brave Browser..."
 	##Install brave
-	sudo apt update && apt install -y brave-browser
+	sudo apt install -y brave-browser
 	WriteToConsole "Brave Browser successfully installed"
 
 ##Install .Net 6
 	WriteToConsole "Installing .Net 6 SDK..."
-	##Get the stuff and add .net6 SDK repo
-	wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-	sudo dpkg -i packages-microsoft-prod.deb
-	rm packages-microsoft-prod.deb
 	##Install .net sdk
-	sudo apt-get update && sudo apt-get install -y dotnet-sdk-6.0
+	sudo apt-get install -y dotnet-sdk-6.0
 	WriteToConsole ".Net 6 SDK successfully installed"
 
 ##Install Git
@@ -37,23 +59,15 @@ WriteToConsole () {
 	WriteToConsole "Git installed successfully"
 
 ##Install GitHub cli
-	WriteToConsole "Installing GitHub Cli..."
-	##Get the stuff and add github cli repo
-	type -p curl >/dev/null || sudo apt install curl -y
-	curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
-	sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
-	echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+	WriteToConsole "Installing GitHub Cli..."	
 	##Install github cli
 	sudo apt update	&& sudo apt install gh -y
 	WriteToConsole "GitHub Cli successfully installed"
 
 ##Install Nala
-	WriteToConsole "Installing Nala..."
-	##Get the stuff and add the repo
-	echo "deb http://deb.volian.org/volian/ scar main" | sudo tee /etc/apt/sources.list.d/volian-archive-scar-unstable.list; 
-	wget -qO - https://deb.volian.org/volian/scar.key | sudo tee /etc/apt/trusted.gpg.d/volian-archive-scar-unstable.gpg
+	WriteToConsole "Installing Nala..."	
 	##Install Nala
-	sudo apt update && sudo apt install nala
+	udo apt install nala
 
 	##Gets best image site
 	echo "Do you want Nala to find the best image sites [y|n]?"
@@ -67,28 +81,21 @@ WriteToConsole () {
 	read isReplaceApt
 	if [[ $isReplaceApt == y ]]; then
 		##Backing up .bashrc first
-		sudo cp /home/paul/.bashrc /home/paul/.bashrc_backup
-		sudo cat nala_config.txt >> /home/paul/.bashrc
+		cp /home/paul/.bashrc /home/$(whoami)/.bashrc_backup
+		cat nala_config.txt >> /home/$(whoami)/.bashrc
 	fi
 	WriteToConsole "Nala successfully installed"
 
 ##Install Sublime Text
 	WriteToConsole "Installing Sublime Text..."
-	##Get the stuff and add the repo
-	wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg
-	echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
 	##Install Sublime Text
-	sudo apt update && sudo apt install sublime-text
+	udo apt install sublime-text
 	WriteToConsole "Sublime Text successfully installed"
 
 ##Install docker
 	WriteToConsole "Installing Docker..."
-	##Get the stuff and add the repo
-	sudo apt install apt-transport-https ca-certificates curl gnupg2 software-properties-common
-	curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-	echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian buster stable" | sudo tee /etc/apt/sources.list.d/docker.list
 	##Install Docker
-	sudo apt update && sudo apt install docker-ce docker-ce-cli containerd.io
+	sudo apt install docker-ce docker-ce-cli containerd.io
 	##Do we want docker to start at sytem load?
 	echo "Do you want docker to load at system startup [y|n]?"
 	read isDockerLoad
@@ -115,14 +122,14 @@ WriteToConsole () {
 ##Install Jetbrains stuff
 	##Install DataGrip
 	WriteToConsole "Installing DataGrip..."
-	cd /home/paul/Downloads
+	cd /home/$(whoami)/Downloads
 	wget -O DataGrip.tar.gz https://download.jetbrains.com/datagrip/datagrip-2022.2.5.tar.gz
 	sudo tar -xf DataGrip.tar.gz -C /opt/
 	WriteToConsole "DataGrip successfully installed"
 
 	##Install Rider
 	WriteToConsole "Installing Rider..."
-	cd /home/paul/Downloads
+	cd /home/$(whoami)/Downloads
 	wget -O Rider.tar.gz https://download.jetbrains.com/rider/JetBrains.Rider-2022.2.3.tar.gz
 	sudo tar -xf Rider.tar.gz -C /opt/
 	WriteToConsole "Rider successfully installed"

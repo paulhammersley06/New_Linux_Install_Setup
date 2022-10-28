@@ -8,20 +8,20 @@ echo "Whats you user name?"
 read userName
 
 WriteToConsole () {
+	echo
 	echo "------------------------"
 	echo "$1"
 	echo "------------------------"
 	echo
 }
 
-
 ##Install Gnome (no bloat)
 WriteToConsole "Installing Gnome (no bloat)..."
-apt install gnome-session gnome-shell gnome-backgrounds gnome-applets gnome-control-center gnome-terminal --no-install-recommends
+sudo apt install -y --no-install-recommends gdk3
 
 ##Install Dependencies
 WriteToConsole "Installing dependencies..."
-sudo apt install apt-transport-https ca-certificates curl gnupg2 software-properties-common
+sudo apt install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common
 
 ##Add the repos
 	WriteToConsole "Getting the repo's..."
@@ -37,10 +37,10 @@ sudo apt install apt-transport-https ca-certificates curl gnupg2 software-proper
 	sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
 	echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
 	##Nala
-	echo "deb http://deb.volian.org/volian/ scar main" | sudo tee /etc/apt/sources.list.d/volian-archive-scar-unstable.list; 
-	wget https://deb.volian.org/volian/scar.key | sudo tee /etc/apt/trusted.gpg.d/volian-archive-scar-unstable.gpg
+	echo "deb http://deb.volian.org/volian/ scar main" | sudo gpg --dearmor | sudo tee /etc/apt/sources.list.d/volian-archive-scar-unstable.list; 
+	wget https://deb.volian.org/volian/scar.key | sudo tee /etc/apt/trusted.gpg.d/volian-archive-scar-unstable.gpg > dev/null
 	##Sublime
-	wget https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg
+	wget https://download.sublimetext.com/sublimehq-pub.gpg | sudo gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg > dev/null
 	echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
 	##Docker
 	curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
@@ -61,12 +61,19 @@ sudo apt install apt-transport-https ca-certificates curl gnupg2 software-proper
 
 ##Install Git
 	WriteToConsole "Installing Git..."
-	sudo apt install git
+	sudo apt install -y git
 
 ##Install GitHub cli
 	WriteToConsole "Installing GitHub Cli..."	
 	##Install github cli
 	sudo apt install -y gh
+
+##Install Starship (terminal customisation from Chris Titus)
+	mkdir GitHub
+	cd GitHub
+	git clone https://github.com/christitustech/mybash
+	cd mybash
+	./setup.sh
 
 ##Install Nala
 	WriteToConsole "Installing Nala..."	
@@ -92,12 +99,20 @@ sudo apt install apt-transport-https ca-certificates curl gnupg2 software-proper
 ##Install Sublime Text
 	WriteToConsole "Installing Sublime Text..."
 	##Install Sublime Text
-	sudo apt install sublime-text
+	sudo apt install -y sublime-text
+
+##Install NeoFetch
+	WriteToConsole "Installing NeoFetch..."
+	sudo apt install -y neofetch
+
+##Install HTop
+	WriteToConsole "Installing HTop..."
+	sudo apt install -y htop
 
 ##Install docker
 	WriteToConsole "Installing Docker..."
 	##Install Docker
-	sudo apt install docker-ce docker-ce-cli containerd.io
+	sudo apt install -y docker-ce docker-ce-cli containerd.io
 	##Do we want docker to start at sytem load?
 	echo "Do you want docker to load at system startup [y|n]?"
 	read isDockerLoad

@@ -7,6 +7,9 @@ set -o noclobber
 echo "Whats you user name?"
 read userName
 
+##Add user to sudo group
+sudo usermod -aG sudo $userName
+
 WriteToConsole () {
 	echo
 	echo "------------------------"
@@ -37,11 +40,11 @@ sudo apt-get install -y apt-transport-https ca-certificates curl gnupg2 software
 	sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
 	echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
 	##Nala
-	echo "deb http://deb.volian.org/volian/ scar main" | sudo gpg --dearmor | sudo tee /etc/apt/sources.list.d/volian-archive-scar-unstable.list; 
+	echo "deb http://deb.volian.org/volian/ scar main" | sudo gpg --dearmor | sudo tee /etc/apt/sources.list.d/volian-archive-scar-unstable.list
 	wget https://deb.volian.org/volian/scar.key | sudo tee /etc/apt/trusted.gpg.d/volian-archive-scar-unstable.gpg > dev/null
 	##Sublime
-	wget https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg > /dev/null
 	echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
+	wget https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg > /dev/null
 	##Docker
 	curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 	echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian buster stable" | sudo tee /etc/apt/sources.list.d/docker.list

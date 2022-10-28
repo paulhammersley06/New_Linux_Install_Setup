@@ -17,7 +17,7 @@ WriteToConsole () {
 
 ##Install Gnome (no bloat)
 WriteToConsole "Installing Gnome (no bloat)..."
-sudo apt-get install -y gdk3
+sudo apt-get install -y gdm3
 
 ##Install Dependencies
 WriteToConsole "Installing dependencies..."
@@ -40,7 +40,7 @@ sudo apt-get install -y apt-transport-https ca-certificates curl gnupg2 software
 	echo "deb http://deb.volian.org/volian/ scar main" | sudo gpg --dearmor | sudo tee /etc/apt/sources.list.d/volian-archive-scar-unstable.list; 
 	wget https://deb.volian.org/volian/scar.key | sudo tee /etc/apt/trusted.gpg.d/volian-archive-scar-unstable.gpg > dev/null
 	##Sublime
-	wget https://download.sublimetext.com/sublimehq-pub.gpg | sudo gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg > dev/null
+	wget https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg > /dev/null
 	echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
 	##Docker
 	curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
@@ -74,7 +74,7 @@ sudo apt-get install -y apt-transport-https ca-certificates curl gnupg2 software
 	cd GitHub
 	git clone https://github.com/christitustech/mybash
 	cd mybash
-	sudo ./setup.sh
+	sudo bash setup.sh
 
 ##Install Nala
 	WriteToConsole "Installing Nala..."	

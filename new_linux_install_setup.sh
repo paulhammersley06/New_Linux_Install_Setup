@@ -17,11 +17,11 @@ WriteToConsole () {
 
 ##Install Gnome (no bloat)
 WriteToConsole "Installing Gnome (no bloat)..."
-sudo apt install -y --no-install-recommends gdk3
+sudo apt-get install -y --no-install-recommends gdk3
 
 ##Install Dependencies
 WriteToConsole "Installing dependencies..."
-sudo apt install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common
+sudo apt-get install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common
 
 ##Add the repos
 	WriteToConsole "Getting the repo's..."
@@ -69,11 +69,12 @@ sudo apt install -y apt-transport-https ca-certificates curl gnupg2 software-pro
 	sudo apt install -y gh
 
 ##Install Starship (terminal customisation from Chris Titus)
+	WriteToConsole "Installing Startship..."
 	mkdir GitHub
 	cd GitHub
 	git clone https://github.com/christitustech/mybash
 	cd mybash
-	./setup.sh
+	sudo ./setup.sh
 
 ##Install Nala
 	WriteToConsole "Installing Nala..."	
@@ -99,7 +100,7 @@ sudo apt install -y apt-transport-https ca-certificates curl gnupg2 software-pro
 ##Install Sublime Text
 	WriteToConsole "Installing Sublime Text..."
 	##Install Sublime Text
-	sudo apt install -y sublime-text
+	sudo apt-get install -y sublime-text
 
 ##Install NeoFetch
 	WriteToConsole "Installing NeoFetch..."

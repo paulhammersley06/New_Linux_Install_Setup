@@ -17,7 +17,7 @@ WriteToConsole () {
 
 ##Install Gnome (no bloat)
 WriteToConsole "Installing Gnome (no bloat)..."
-sudo apt-get install -y --no-install-recommends gdk3
+sudo apt-get install -y gdk3
 
 ##Install Dependencies
 WriteToConsole "Installing dependencies..."
@@ -69,7 +69,7 @@ sudo apt-get install -y apt-transport-https ca-certificates curl gnupg2 software
 	sudo apt install -y gh
 
 ##Install Starship (terminal customisation from Chris Titus)
-	WriteToConsole "Installing Startship..."
+	WriteToConsole "Installing Starship..."
 	mkdir GitHub
 	cd GitHub
 	git clone https://github.com/christitustech/mybash
@@ -148,3 +148,5 @@ sudo apt-get install -y apt-transport-https ca-certificates curl gnupg2 software
 	cd /home/$userName/Downloads
 	wget -O Rider.tar.gz https://download.jetbrains.com/rider/JetBrains.Rider-2022.2.3.tar.gz
 	sudo tar -xf Rider.tar.gz -C /opt/
+
+WriteToConsole "Setup complete. Please Reboot"

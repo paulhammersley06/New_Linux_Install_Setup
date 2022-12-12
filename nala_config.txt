@@ -1,5 +1,5 @@
 
-"apt() { 
+apt() { 
   command nala "$@"
 }
 sudo() {
@@ -9,4 +9,4 @@ sudo() {
   else
     command sudo "$@"
   fi
-}"
+}

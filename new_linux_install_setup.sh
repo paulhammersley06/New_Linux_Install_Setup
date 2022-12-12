@@ -51,6 +51,10 @@ sudo apt-get install -y apt-transport-https ca-certificates curl gnupg2 software
 
 	sudo apt-get update -y
 
+##Install Gnome Treminal
+	WriteToConsole "Installing Gnome Terminal..."
+	##Install gnome terminal
+	sudo apt install -y gnome-terminal
 
 ##Install Brave Browser
 	WriteToConsole "Installing Brave Browser..."

@@ -1,8 +1,13 @@
 #! /bin/bash
 
+<<<<<<< HEAD
 ##If you installed Debian with a root account, you need to log in as root and install Sudo manually
 ##Also need to manually install git to pull this script
 ##Fav theme at the mo - WhiteSur - Dark Nord and Nordzy icon pack
+=======
+##If you installed Debian with a Root account, you need to log in as root and install Sudo manually
+##Also need to install git to pull this script
+>>>>>>> e3887276348bbae5e5c9fae15277b07d155ab521
 
 ##Set to ask on file override
 set -o noclobber
@@ -46,7 +51,11 @@ sudo nala fetch
 
 ##Install Gnome (no bloat)
 WriteToConsole "Installing Gnome (no bloat)..."
+<<<<<<< HEAD
 sudo nala install -y gdm3 gnome-shell gnome-terminal gnome-tweaks
+=======
+sudo nala install -y gdm3 gnome-shell gnome-terminal
+>>>>>>> e3887276348bbae5e5c9fae15277b07d155ab521
 
 ##Install file manager
 WriteToConsole "Installing Nemo..."
@@ -59,6 +68,18 @@ sudo nala install -y brave-browser
 ##Install GitHub cli
 WriteToConsole "Installing GitHub Cli..."
 sudo nala install -y gh
+<<<<<<< HEAD
+=======
+
+##Substitutes apt to nala
+echo "Do you want Nala to replace apt [y|n]?"
+read isReplaceApt
+if [[ $isReplaceApt == y ]]; then
+	##Backing up .bashrc first
+	cp /home/$userName/.bashrc /home/$userName/.bashrc_backup
+	cat nala_config.txt >> /home/$userName/.bashrc
+fi
+>>>>>>> e3887276348bbae5e5c9fae15277b07d155ab521
 
 ##Install Sublime Text
 WriteToConsole "Installing Sublime Text..."
@@ -72,6 +93,7 @@ sudo nala install -y neofetch
 WriteToConsole "Installing HTop..."
 sudo nala install -y htop
 
+<<<<<<< HEAD
 ##Install Shotwell (raw image viewer)
 WriteToConsole "Installing Shotwell..."
 sudo nala install -y shotwell
@@ -85,6 +107,17 @@ sudo mv jetbrains-toolbox-2.4.1.32573 /opt/JetbrainsToolbox
 cd /opt/JetbrainsToolbox
 sudo jetbrains-toolbox
 
+=======
+##Install Jetbrains Toolobox
+WriteToConsole "Installing Jetbrains Toolbox..."
+cd /home/$userName/Downloads
+wget -O JetbrainsToolbox.tar.gz https://download.jetbrains.com/toolbox/jetbrains-toolbox-2.4.1.32573.tar.gz
+sudo tar -xvzf JetbrainsToolbox.tar.gz
+sudo mv jetbrains-toolbox-2.4.1.32573 /opt/JetbrainsToolbox
+cd /opt/JetbrainsToolbox
+sudo jetbrains-toolbox
+
+>>>>>>> e3887276348bbae5e5c9fae15277b07d155ab521
 ##Enable GUI logon
 WriteToConsole "Setting up GUI..."
 sudo systemctl enable gdm3 && sudo systemctl set-default graphical.target

@@ -41,8 +41,11 @@ sudo nala fetch
 	##Sublime
 	wget https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
 	echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list > dev/null
+	##VS Codium
+	wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg     | gpg --dearmor     | sudo dd of=/usr/share/keyrings/vscodium-archive-keyring.gpg
+	echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https://download.vscodium.com/debs vscodium main'     | sudo tee /etc/apt/sources.list.d/vscodium.list
 
-	sudo apt-get update -y
+	sudo nala update -y
 
 ##Install Gnome (no bloat)
 WriteToConsole "Installing Gnome (no bloat)..."
@@ -63,6 +66,10 @@ sudo nala install -y gh
 ##Install Sublime Text
 WriteToConsole "Installing Sublime Text..."
 sudo nala install -y sublime-text
+
+##Install VS Codium
+WriteToConsole "Installing VS Codium..."
+sudo nala install -y codium
 
 ##Install NeoFetch
 WriteToConsole "Installing NeoFetch..."

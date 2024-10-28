@@ -24,7 +24,10 @@ WriteToConsole () {
 
 ##Install Nala
 WriteToConsole "Installing Nala..."
-sudo apt install -y nala
+sudo apt install nala -y
+
+WriteToConsole "Installing Curl..."
+sudo nala install curl -y
 
 WriteToConsole "Getting repo mirrors..."
 sudo nala fetch
@@ -39,13 +42,13 @@ sudo nala fetch
 	sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
 	echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
 	##Sublime
-	wget https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
-	echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list > dev/null
+	wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg > /dev/null
+	echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
 	##VS Codium
 	wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg     | gpg --dearmor     | sudo dd of=/usr/share/keyrings/vscodium-archive-keyring.gpg
 	echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https://download.vscodium.com/debs vscodium main'     | sudo tee /etc/apt/sources.list.d/vscodium.list
 
-	sudo nala update -y
+	sudo nala update
 
 ##Install Gnome (no bloat)
 WriteToConsole "Installing Gnome (no bloat)..."

@@ -95,6 +95,14 @@ sudo mv jetbrains-toolbox-2.4.1.32573 /opt/JetbrainsToolbox
 cd /opt/JetbrainsToolbox
 sudo jetbrains-toolbox
 
+##Install WhiteSur
+WriteToConsole "Installing theme..."
+mkdit Git-Repos
+cd Git-Repos
+git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git --depth=1
+cd WhiteSur-gtk-theme
+./install.sh -l
+
 ##Enable GUI logon
 WriteToConsole "Setting up GUI..."
 sudo systemctl enable gdm3 && sudo systemctl set-default graphical.target

@@ -75,8 +75,8 @@ WriteToConsole "Installing VS Codium..."
 sudo nala install -y codium
 
 ##Install NeoFetch
-WriteToConsole "Installing NeoFetch..."
-sudo nala install -y neofetch
+WriteToConsole "Installing FastFetch..."
+sudo nala install -y fastfetch
 
 ##Install HTop
 WriteToConsole "Installing HTop..."
@@ -101,7 +101,7 @@ mkdit Git-Repos
 cd Git-Repos
 git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git --depth=1
 cd WhiteSur-gtk-theme
-./install.sh -l
+./install.sh -l -s nord
 
 ##Enable GUI logon
 WriteToConsole "Setting up GUI..."

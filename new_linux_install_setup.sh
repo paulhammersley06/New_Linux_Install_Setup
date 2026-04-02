@@ -2,7 +2,6 @@
 
 ##If you installed Debian with a root account, you need to log in as root and install Sudo manually
 ##Also need to manually install git to pull this script
-##Fav theme at the mo - WhiteSur - Dark Nord and Nordzy icon pack
 
 ##Set to ask on file override
 set -o noclobber
@@ -22,15 +21,11 @@ WriteToConsole () {
 	echo
 }
 
-##Install Nala
-WriteToConsole "Installing Nala..."
-sudo apt install nala -y
-
 WriteToConsole "Installing Curl..."
-sudo nala install curl -y
+sudo apt install curl -y
 
 WriteToConsole "Getting repo mirrors..."
-sudo nala fetch
+sudo apt fetch
 
 ##Add the repos
 	WriteToConsole "Getting the repo's..."
@@ -48,43 +43,43 @@ sudo nala fetch
 	wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg     | gpg --dearmor     | sudo dd of=/usr/share/keyrings/vscodium-archive-keyring.gpg
 	echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https://download.vscodium.com/debs vscodium main'     | sudo tee /etc/apt/sources.list.d/vscodium.list
 
-	sudo nala update
+	sudo apt update
 
 ##Install Gnome (no bloat)
-WriteToConsole "Installing Gnome (no bloat)..."
-sudo nala install -y gdm3 gnome-shell gnome-terminal gnome-tweaks
+WriteToConsole "Installing KDE (no bloat) and GDM..."
+sudo apt install -y kde-plasma-desktop kwin-style-aurorae powerdevil bluedevil kmix gmd3 partitionmanager pipewirepulse plasma-nm --no-install-recommends
 
 ##Install file manager
-WriteToConsole "Installing Nemo..."
-sudo nala install nemo
+WriteToConsole "Installing Dolphin..."
+sudo apt install dolphin
 
 ##Install Brave Browser
 WriteToConsole "Installing Brave Browser..."
-sudo nala install -y brave-browser
+sudo apt install -y brave-browser
 
 ##Install GitHub cli
 WriteToConsole "Installing GitHub Cli..."
-sudo nala install -y gh
+sudo apt install -y gh
 
 ##Install Sublime Text
 WriteToConsole "Installing Sublime Text..."
-sudo nala install -y sublime-text
+sudo apt install -y sublime-text
 
 ##Install VS Codium
 WriteToConsole "Installing VS Codium..."
-sudo nala install -y codium
+sudo apt install -y codium
 
-##Install NeoFetch
+##Install FastFetch
 WriteToConsole "Installing FastFetch..."
-sudo nala install -y fastfetch
+sudo apt install -y fastfetch
 
 ##Install HTop
 WriteToConsole "Installing HTop..."
-sudo nala install -y htop
+sudo apt install -y htop
 
 ##Install Shotwell (raw image viewer)
 WriteToConsole "Installing Shotwell..."
-sudo nala install -y shotwell
+sudo apt install -y shotwell
 
 ##Install Jetbrains Toolobox
 WriteToConsole "Installing Jetbrains Toolbox..."
@@ -95,25 +90,11 @@ sudo mv jetbrains-toolbox-2.4.1.32573 /opt/JetbrainsToolbox
 cd /opt/JetbrainsToolbox
 sudo jetbrains-toolbox
 
-##Install WhiteSur
-WriteToConsole "Installing theme..."
-mkdit Git-Repos
-cd Git-Repos
-git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git --depth=1
-cd WhiteSur-gtk-theme
-./install.sh -l -s nord
-
 ##Enable GUI logon
 WriteToConsole "Setting up GUI..."
 sudo systemctl enable gdm3 && sudo systemctl set-default graphical.target
 
-##Substitutes apt to nala
-echo "Do you want Nala to replace apt [y|n]?"
-read isReplaceApt
-if [[ $isReplaceApt == y ]]; then
-	##Backing up .bashrc first
-	cp /home/$userName/.bashrc /home/$userName/.bashrc_backup
-	cat nala_config.txt >> /home/$userName/.bashrc
-fi
+##Removing FireFox
+sudo apt remove firefox
 
 WriteToConsole "Setup complete. Please reboot"

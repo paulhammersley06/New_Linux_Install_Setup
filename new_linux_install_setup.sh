@@ -47,7 +47,7 @@ sudo apt fetch
 
 ##Install Gnome (no bloat)
 WriteToConsole "Installing KDE (no bloat) and GDM..."
-sudo apt install -y kde-plasma-desktop kwin-style-aurorae powerdevil bluedevil kmix gmd3 partitionmanager pipewirepulse plasma-nm --no-install-recommends
+sudo apt install -y kde-plasma-desktop kwin-style-aurorae powerdevil bluedevil kmix sddm kde-config-sddm partitionmanager pipewirepulse plasma-nm install kaccounts-integration kaccounts-providers kio-gdrive --no-install-recommends
 
 ##Install file manager
 WriteToConsole "Installing Dolphin..."

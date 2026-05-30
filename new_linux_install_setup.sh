@@ -24,9 +24,6 @@ WriteToConsole () {
 WriteToConsole "Installing Curl..."
 sudo apt install curl -y
 
-WriteToConsole "Getting repo mirrors..."
-sudo apt fetch
-
 ##Add the repos
 	WriteToConsole "Getting the repo's..."
 	##Brave Browser
@@ -46,8 +43,8 @@ sudo apt fetch
 	sudo apt update
 
 ##Install Gnome (no bloat)
-WriteToConsole "Installing KDE (no bloat) and GDM..."
-sudo apt install -y kde-plasma-desktop kwin-style-aurorae powerdevil bluedevil kmix sddm kde-config-sddm partitionmanager pipewirepulse plasma-nm install kaccounts-integration kaccounts-providers kio-gdrive --no-install-recommends
+WriteToConsole "Installing KDE (no bloat)"
+sudo apt install -y kde-plasma-desktop kwin-style-aurorae powerdevil bluedevil kmix sddm kde-config-sddm partitionmanager pipewire-pulse plasma-nm kaccounts-integration kaccounts-providers kio-gdrive blueman pulseaudio-module-bluetooth libspa-0.2-bluetooth --no-install-recommends
 
 ##Install file manager
 WriteToConsole "Installing Dolphin..."
@@ -92,7 +89,7 @@ sudo jetbrains-toolbox
 
 ##Enable GUI logon
 WriteToConsole "Setting up GUI..."
-sudo systemctl enable gdm3 && sudo systemctl set-default graphical.target
+sudo systemctl enable sddm && sudo systemctl set-default graphical.target
 
 ##Removing FireFox
 sudo apt remove firefox
